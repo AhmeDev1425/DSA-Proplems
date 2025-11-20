@@ -114,8 +114,68 @@ class BinaryTree:
         xd, xp = self.get_level_and_parent(root, x)
         yd, yp = self.get_level_and_parent(root, y)
         return xd == yd and xp != yp
+    ##################
+    '''
+        perfect :
+            All levels are completely filled
 
+            All leafs are on the same level
 
+            Every non-leaf node has exactly two children
+    '''
+
+    def get_height(self, current):
+        if not current :
+            return 0
+        return 1 + max(self.get_height(current.left) , self.get_height(current.right) )
+
+    def get_n_of_nodes(self, current):
+        if not current :
+            return 0
+        return 1 + self.get_n_of_nodes(current.left) + self.get_n_of_nodes(current.right)
+
+    def is_perfect_formula(self):
+        h = self.get_height(self.root)
+        n = self.get_n_of_nodes(self.root)
+        return n == 2**(h + 1)
+
+    # def is_perfct() # TODO 
+
+    def inorder_traversal(self):
+        stk = []
+        current = self.root
+
+        while current or stk:
+            # انزل لليسار لأقصى حد
+            while current:
+                stk.append(current)
+                current = current.left
+
+            # خذ العنصر من الـ stack
+            current = stk.pop()
+            print(current.val)
+
+            # ثم اذهب لليمين
+            current = current.right
+
+    def inorder_iterate(self): # Simulate Recursive
+        stk = [(self.root,False)]
+        res = []
+        while stk :
+            current, is_completed = stk.pop()
+
+            if is_completed: 
+                res.append(current)
+
+            else:
+
+                if current.right:
+                    stk.append((current.right,False))
+
+                if current.left:
+                    stk.append((current.left,False))
+
+        return res
 # Example usage: add some leaf nodes to the tree
 if __name__ == "__main__":
     tree = BinaryTree(1)
