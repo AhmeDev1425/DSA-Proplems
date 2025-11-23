@@ -172,10 +172,13 @@ class BinaryTree:
                 if current.right:
                     stk.append((current.right,False))
 
+                stk.append((current,True))
+
                 if current.left:
                     stk.append((current.left,False))
 
         return res
+
 # Example usage: add some leaf nodes to the tree
 if __name__ == "__main__":
     tree = BinaryTree(1)
